@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Occurrences</title>
+</head>
+<body>
+
+  <textarea id="textInput" placeholder="Enter text..."></textarea>
+
+  <!-- Buttons for each character -->
+  <div id="buttonsContainer"></div>
+
+  <div id="occurrencesResult"></div>
+
+  <script>
+    function createButtons() {
+      var buttonsContainer = document.getElementById('buttonsContainer');
+      for (var charCode = 97; charCode <= 122; charCode++) {
+        var char = String.fromCharCode(charCode);
+        var button = document.createElement('button');
+        button.textContent = char ;
+        button.onclick = function() {
+          findOccurrences(this.textContent.slice(-2, -1));
+        };
+        buttonsContainer.appendChild(button);
+      }
+    }
+
+    function findOccurrences(charToFind) {
+      // Get the input text
+      var inputText = document.getElementById('textInput').value.toLowerCase();
+
+      // Create an object to store character occurrences
+      var occurrences = {};
+
+      // Loop through each character in the input text
+      for (var i = 0; i < inputText.length; i++) {
+        var currentChar = inputText[i];
+
+        // Check if the character matches the specified character to find
+        if (currentChar === charToFind) {
+          // If the character is already in the occurrences object, increment the count
+          if (occurrences[currentChar]) {
+            occurrences[currentChar]++;
+          } else {
+            // If the character is not in the occurrences object, initialize the count to 1
+            occurrences[currentChar] = 1;
+          }
+        }
+      }
+
+      // Display the results
+      var resultDiv = document.getElementById('occurrencesResult');
+      resultDiv.innerHTML = '<h3>Character Occurrences for \'' + charToFind + '\':</h3>';
+
+      for (var char in occurrences) {
+        resultDiv.innerHTML += char + ': ' + occurrences[char] + '<br>';
+      }
+    }
+
+    // Call the function to create buttons when the page loads
+    createButtons();
+  </script>
+
+</body>
+</html>
